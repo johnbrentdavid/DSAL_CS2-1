@@ -10,7 +10,7 @@ public class OE1_David{
     public static void main(String[] args){
         
         Scanner in= new Scanner(System.in);
-        int ch,size,j=1;
+        int ch,size,another_size,j=1;
         int my_array[]=new int[size];
 
         //While to repeat the process
