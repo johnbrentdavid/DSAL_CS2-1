@@ -10,7 +10,7 @@ public class OE1_David{
     public static void main(String[] args){
         
         Scanner in= new Scanner(System.in);
-        int ch,size,another_size,j=1;
+        int ch,size,j=1;
         int my_array[]=new int[size];
 
         //While to repeat the process
@@ -58,7 +58,9 @@ public class OE1_David{
                 System.out.print("Enter a new element in the Array : ");
                 new_array[size] =in.nextInt();
                 System.out.println("This is the Array with newly inserted element : "+ Arrays.toString(new_array));
-
+            case 3:{
+                break;
+            }
 
 
                 
