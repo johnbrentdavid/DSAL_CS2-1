@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
-void raise(int x,int y,int& z){
+void raise(float x,float y,float& z){
     z=x;
     while(y!=1){
         z*=x;
@@ -9,7 +9,7 @@ void raise(int x,int y,int& z){
     }
  } 
  int main(){
-     int a,b,c=0;
+     float a,b,c=0;
      char d;
         cout<<"Please enter the first number\n";
         cin>>a;
