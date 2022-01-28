@@ -1,4 +1,6 @@
+import java.util.*;
 public class OE2_David {
+    
     
     public static void bubbleSort(int[] array1){
         int ctr = array1.length;
@@ -6,13 +8,11 @@ public class OE2_David {
 
         for(int i=0;i<ctr;i++){
             for(int j=1;j<ctr-i;j++){
-                System.out.println("ELements ["+ array1[j-1]+"] ["+ array1[j]+"]");
                 if(array1[j-1]>array1[j]){
                     //swapping code
                     temp=array1[j-1];
                     array1[j-1]=array1[j];
                     array1[j]=temp;
-
                 }
             }
         }//end of main for loop
@@ -37,23 +37,56 @@ public class OE2_David {
         }
     }
     public static void main(String[] args) {
-    int[] my_array = {14,33,27,35,10};
-    int[] my_array2 = {14,33,27,10,35,19,42,44};
+    //Code for user input
+        Scanner in= new Scanner(System.in);
+        int size;
+        System.out.print("Enter the desired size of the array : ");
+        size= in.nextInt();
+        int[] my_array = new int[size];
+        for(int i=0;i<size;i++){
+            System.out.print("Enter array element for "+i+" index : ");
+            my_array[i]=in.nextInt();
+        }
+        System.out.println("My Array List : "+ Arrays.toString(my_array)+"\n\n");
+    //Command to Sort
+        boolean wrong=false;
+        do{
+        System.out.print("What type of sorting would you like to do?\n[1] Insertion\n[2] Bubble Sort\n[3] Exit\nSelect Operation : ");
+        int op=in.nextInt();
+        
+        switch(op){
+            case 1:{
+                System.out.print("Unsorted Array : { ");
+                printArray(my_array);
+        
+                bubbleSort(my_array);
+        
+                System.out.print("Sorted Array : { ");
+                printArray(my_array);
+                wrong=false;
+                break;
+            }
+            case 2:{
+                System.out.print("No Insertion Array : { ");
+                printArray(my_array);
 
-        System.out.print("Unsorted Array : { ");
-        printArray(my_array);
+                insertionSort(my_array);
 
-        bubbleSort(my_array);
-
-        System.out.print("Sorted Array : { ");
-        printArray(my_array);
-
-        System.out.print("No Insertion Array : { ");
-        printArray(my_array2);
-
-        insertionSort(my_array2);
-
-        System.out.print("Inserted Array : { ");
-        printArray(my_array2);
-    }
-}
+                System.out.print("Inserted Array : { ");
+                printArray(my_array);
+                wrong=false;
+                break;
+            }
+            case 3:{
+                System.out.print("Thanks for using my Array Sorting Code!");
+                wrong=false;
+                break;
+            }
+            default:{
+                System.out.println("\nPlease enter a valid number!\n");
+                wrong=true;
+            }
+        }
+        }while(wrong); 
+    }//end of main line
+}//end of code
