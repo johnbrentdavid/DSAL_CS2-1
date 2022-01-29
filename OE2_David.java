@@ -3,6 +3,8 @@ public class OE2_David {
     
     
     public static void bubbleSort(int[] array1){
+        /*This method do sort by putting the highest value to the left most part 
+        We use .length - first index to remove the last index and so on. */
         int ctr = array1.length;
         int temp=0;
 
@@ -24,6 +26,7 @@ public class OE2_David {
         System.out.println("}");
     }
     public static void insertionSort(int array2[]){
+        /*This method takes the element of the index then swap */
         int ctr=array2.length;
         for(int i=1;i<ctr;i++){
             int to_insert = array2[i];//to insert
