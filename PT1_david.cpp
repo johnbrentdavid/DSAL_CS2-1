@@ -7,7 +7,8 @@
 
 using namespace std;
 
-#define ARRAYLEN(arr) sizeof(arr)/sizeof(arr[0])
+//John Brent David PT1 for DSA-Lab
+//Unggoy-ungguyan Game
 
 int i_used=1;
 //creates the deck organized
@@ -154,12 +155,6 @@ void removeCards(int useDeck[],int playerCards[],int x,int y){
         }
         playerCards[i]=playerCards[i+1];
     }
-    cout<<"Used Cards : ";
-    for(int i=1;i<25;i++){
-        
-        transCard(useDeck,i);
-    }
-    cout<<endl;
 }
 
 void showPlayerCard(int p1Cards[]){
@@ -171,6 +166,7 @@ void showPlayerCard(int p1Cards[]){
 
 void pairCards(int useDeck[],int p1Cards[],int p2Cards[],bool &turn){
     if(turn){
+        cout<<"Player 1 is now removing paired cards\n";
         for(int i=0;i<25;i++){
             for(int j=i+1;j<25;j++){
                 if(p1Cards[i]==p1Cards[j]-13||p1Cards[i]==p1Cards[j]-26||p1Cards[i]==p1Cards[j]-39||p1Cards[i]-13==p1Cards[j]||p1Cards[i]-13==p1Cards[j]-26||p1Cards[i]-13==p1Cards[j]-39||p1Cards[i]-26==p1Cards[j]||p1Cards[i]-26==p1Cards[j]-13||p1Cards[i]-26==p1Cards[j]-39||p1Cards[i]-39==p1Cards[j]||p1Cards[i]-39==p1Cards[j]-13||p1Cards[i]-39==p1Cards[j]-26){
@@ -179,22 +175,69 @@ void pairCards(int useDeck[],int p1Cards[],int p2Cards[],bool &turn){
                 }
             }
         }
+        turn=false;
+    }
+    else{
+        for(int i=0;i<25;i++){
+            for(int j=i+1;j<25;j++){
+                if(p2Cards[i]==p2Cards[j]-13||p2Cards[i]==p2Cards[j]-26||p2Cards[i]==p2Cards[j]-39||p2Cards[i]-13==p2Cards[j]||p2Cards[i]-13==p2Cards[j]-26||p2Cards[i]-13==p2Cards[j]-39||p2Cards[i]-26==p2Cards[j]||p2Cards[i]-26==p2Cards[j]-13||p2Cards[i]-26==p2Cards[j]-39||p2Cards[i]-39==p2Cards[j]||p2Cards[i]-39==p2Cards[j]-13||p2Cards[i]-39==p2Cards[j]-26){
+                    cout<<"Removed Elements";transCard(p2Cards,i);cout<<" ";transCard(p2Cards,j);cout<<endl;
+                    removeCards(useDeck,p2Cards,i,j);
+                }
+            }
+        }
+        turn=true;
     }
 }
 
+bool endGame(int p1Cards[],int p2Cards[],int useDeck[]){
+    if(p1Cards[0]==0){
+        cout<<"Player 1 Wins!\nThe hidden card is : ";transCard(useDeck,0);
+        return true;
+    }
+    if(p2Cards[0]==0){
+        cout<<"Player 2 Wins!";transCard(useDeck,0);
+        return true;
+    }
+}
+
+void pickCard(int p1Cards[],int p2Cards[],int action){
+    int i=0;
+    while(p1Cards[i]!=0){
+        i++;
+    }
+    p1Cards[i+1]=p2Cards[action-1];
+
+}
+void p2AvailCards(int p1Cards[],int p2Cards[]){
+    int i=0;
+    while(p2Cards[i]!=0){
+        cout<<" ["<<i+1<<"] ";
+        i++;
+    }
+    cout<<endl;
+}
 int main(){
     stack <int> cardDeck;
     int usedCard[52];
     int cards[52];
     int p1Hand[25];
     int p2Hand[26];
-    int monkey;//used for the hidden card
-    bool playerTurn=true;
+    int monkey,action;//used for the hidden card
+    bool playerTurn=true,emptyhand=false;
+
     empty_usedDeck(usedCard);
     mixDeck(cardDeck,cards);
     monkey=giveCard(cardDeck,p1Hand,p2Hand);
     usedCard[0]=monkey;//pushes the monkey card at the the start of the array
     showPlayerCard(p1Hand);
-    
-    pairCards(usedCard,p1Hand,p2Hand,playerTurn);
+    while(!emptyhand){
+        cout<<"Your current cards : ";
+        showPlayerCard(p1Hand);
+        cout<<"It is your turn to pick a card from Player 2 Cards\n";
+        cin>>action;
+        pickCard(p1Hand,p2Hand,action);
+        pairCards(usedCard,p1Hand,p2Hand,playerTurn);
+        emptyhand=endGame(p1Hand,p2Hand,usedCard);
+    }
 }
