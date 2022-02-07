@@ -9,9 +9,13 @@ using namespace std;
 
 //John Brent David PT1 for DSA-Lab
 //Unggoy-ungguyan Game
-
+/*converts int value to player recognizable value
+    1	2	3	4	5	6	7	8	9	10	11	12	13  Diamonds♦ alt4
+    14	15	16	17	18	19	20	21	22	23	24	25	26  Spades♠ alt6
+    27	28	29	30	31	32	33	34	35	36	37	38	39  Hearts♥ alt3
+    40	41	42	43	44	45	46	47	48	49	50	51	52  Clover♣ alt5
+*/
 int i_used=1;
-//creates the deck organized
 void initArray(int cards[]){
     //loop for creating the deck of cards
     for (int i=0;i<52;i++){
@@ -23,7 +27,6 @@ void empty_usedDeck(int useCard[]){
         useCard[i]=0;
     }
 }
-//shuffles the deck
 void mixDeck(stack <int> &newDeck,int cards[]){
     initArray(cards);
     srand(time(0));
@@ -43,7 +46,6 @@ void mixDeck(stack <int> &newDeck,int cards[]){
     }
 
 }
-//distributes the card to the players hand
 int giveCard(stack <int> &newDeck,int p1Cards[],int p2Cards[]){
     bool p1Turn=false;
     int i=0,j=0,hide;//i=player 1||j=player 2
@@ -67,12 +69,6 @@ int giveCard(stack <int> &newDeck,int p1Cards[],int p2Cards[]){
     }
     return hide;
 }
-/*converts int value to player recognizable value
-    1	2	3	4	5	6	7	8	9	10	11	12	13  Diamonds♦ alt4
-    14	15	16	17	18	19	20	21	22	23	24	25	26  Spades♠ alt6
-    27	28	29	30	31	32	33	34	35	36	37	38	39  Hearts♥ alt3
-    40	41	42	43	44	45	46	47	48	49	50	51	52  Clover♣ alt5
-*/
 int transCard(int pCards[],int i){
     char symbol;
     if (pCards[i]<=13 && pCards[i]>=1){
@@ -135,10 +131,9 @@ int transCard(int pCards[],int i){
             return 0;
         return 0;
 }
-//remove the paired cards and put it into a queue
 void removeCards(int useDeck[],int playerCards[],int x,int y){
     int temp;
-    for(int i=y;i<25;i++){//remove the further pair
+    for(int i=y;playerCards[i]!=0;i++){//remove the further pair
         if(i==y){
             temp=playerCards[i];
             useDeck[i_used]=temp;
@@ -147,7 +142,7 @@ void removeCards(int useDeck[],int playerCards[],int x,int y){
         playerCards[i]=playerCards[i+1];
         
     }
-    for(int i=x;i<25;i++){//remove the nearest pair
+    for(int i=x;playerCards[i]!=0;i++){//remove the nearest pair
         if(i==x){
             temp=playerCards[i];
             useDeck[i_used]=temp;
@@ -156,23 +151,38 @@ void removeCards(int useDeck[],int playerCards[],int x,int y){
         playerCards[i]=playerCards[i+1];
     }
 }
-
 void showPlayerCard(int p1Cards[]){
     for(int i=0;i< 25;i++){//displays player1Hand
         transCard(p1Cards,i);
     }//end of main for loop
     cout<<endl;
 }
-
 void pairCards(int useDeck[],int p1Cards[],int p2Cards[],bool &turn){
     if(turn){
         cout<<"Player 1 is now removing paired cards\n";
         for(int i=0;i<25;i++){
             for(int j=i+1;j<25;j++){
-                if(p1Cards[i]==p1Cards[j]-13||p1Cards[i]==p1Cards[j]-26||p1Cards[i]==p1Cards[j]-39||p1Cards[i]-13==p1Cards[j]||p1Cards[i]-13==p1Cards[j]-26||p1Cards[i]-13==p1Cards[j]-39||p1Cards[i]-26==p1Cards[j]||p1Cards[i]-26==p1Cards[j]-13||p1Cards[i]-26==p1Cards[j]-39||p1Cards[i]-39==p1Cards[j]||p1Cards[i]-39==p1Cards[j]-13||p1Cards[i]-39==p1Cards[j]-26){
+                if(p1Cards[i]==(p1Cards[j]-13)||p1Cards[i]==(p1Cards[j]-26)||p1Cards[i]==(p1Cards[j]-39)){
                     cout<<"Removed Elements";transCard(p1Cards,i);cout<<" ";transCard(p1Cards,j);cout<<endl;
                     removeCards(useDeck,p1Cards,i,j);
+                    i=0;
                 }
+                else if((p1Cards[i]-13)==p1Cards[j]||(p1Cards[i]-13)==(p1Cards[j]-26)||(p1Cards[i]-13)==(p1Cards[j]-39)){
+                    cout<<"Removed Elements";transCard(p1Cards,i);cout<<" ";transCard(p1Cards,j);cout<<endl;
+                    removeCards(useDeck,p1Cards,i,j);
+                    i=0;
+                }
+                else if((p1Cards[i]-26)==p1Cards[j]||(p1Cards[i]-26)==(p1Cards[j]-13)||(p1Cards[i]-26)==(p1Cards[j]-39)){
+                    cout<<"Removed Elements";transCard(p1Cards,i);cout<<" ";transCard(p1Cards,j);cout<<endl;
+                    removeCards(useDeck,p1Cards,i,j);
+                    i=0;
+                }
+                else if((p1Cards[i]-39)==p1Cards[j]||(p1Cards[i]-39)==(p1Cards[j]-13)||(p1Cards[i]-39)==(p1Cards[j]-26)){
+                    cout<<"Removed Elements";transCard(p1Cards,i);cout<<" ";transCard(p1Cards,j);cout<<endl;
+                    removeCards(useDeck,p1Cards,i,j);
+                    i=0;
+                }
+                
             }
         }
         turn=false;
@@ -183,25 +193,34 @@ void pairCards(int useDeck[],int p1Cards[],int p2Cards[],bool &turn){
                 if(p2Cards[i]==p2Cards[j]-13||p2Cards[i]==p2Cards[j]-26||p2Cards[i]==p2Cards[j]-39||p2Cards[i]-13==p2Cards[j]||p2Cards[i]-13==p2Cards[j]-26||p2Cards[i]-13==p2Cards[j]-39||p2Cards[i]-26==p2Cards[j]||p2Cards[i]-26==p2Cards[j]-13||p2Cards[i]-26==p2Cards[j]-39||p2Cards[i]-39==p2Cards[j]||p2Cards[i]-39==p2Cards[j]-13||p2Cards[i]-39==p2Cards[j]-26){
                     cout<<"Removed Elements";transCard(p2Cards,i);cout<<" ";transCard(p2Cards,j);cout<<endl;
                     removeCards(useDeck,p2Cards,i,j);
+                    i=0;
                 }
             }
         }
         turn=true;
     }
 }
-
 bool endGame(int p1Cards[],int p2Cards[],int useDeck[]){
+    int i=0;
+    
     if(p1Cards[0]==0){
-        cout<<"Player 1 Wins!\nThe hidden card is : ";transCard(useDeck,0);
+        cout<<"==========================\nPlayer 1 Wins!\nThe hidden card is : ";transCard(useDeck,0);
+        cout<<"\nThe Paired Cards : ";
+        for(i=1;useDeck[i]!=0;i++){
+            transCard(useDeck,i);
+        }
         return true;
     }
     if(p2Cards[0]==0){
-        cout<<"Player 2 Wins!";transCard(useDeck,0);
+        cout<<"==========================\nPlayer 2 Wins!";transCard(useDeck,0);
+        cout<<"\nThe Paired Cards : ";
+        for(i=1;useDeck[i]!=0;i++){
+            transCard(useDeck,i);
+        }
         return true;
     }
     return false;
 }
-
 void pickCard(int p1Cards[],int p2Cards[],int action,bool playerTurn){
     if(playerTurn){
         int i=0,temp;
@@ -224,7 +243,6 @@ void pickCard(int p1Cards[],int p2Cards[],int action,bool playerTurn){
         }
     }
 }
-
 void p2AvailCards(int p1Cards[],int p2Cards[]){
     int i=0;
     while(p2Cards[i]!=0){
@@ -233,10 +251,10 @@ void p2AvailCards(int p1Cards[],int p2Cards[]){
     }
     cout<<endl;
 }
-
 void showMechanics(){
     cout<<"\nTo play the game you are initially given 25 cards and 26 cards are given to the bot.\nFirst turn : You will be asked to pick one card on the opponent card to find a pair.\nAfter the first turn: The program will automatically remove your paired cards and move it to used deck.\nThe opponent will now repeat what you need to do.\nThe player who first empty their hands WINS!\nGood luck Player 1\n";
 }
+
 int main(){
     stack <int> cardDeck;
     int usedCard[52];
