@@ -291,7 +291,7 @@ int main(){
             cout<<"It is your turn to pick a card from Player 2 Cards\n";
             p2AvailCards(p1Hand,p2Hand);
             cout<<"You have chosen : ";
-            cin>>action;
+            cin>>action; 
             pickCard(p1Hand,p2Hand,action,playerTurn);
             pairCards(usedCard,p1Hand,p2Hand,playerTurn);
             cout<<endl;
