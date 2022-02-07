@@ -199,29 +199,49 @@ bool endGame(int p1Cards[],int p2Cards[],int useDeck[]){
         cout<<"Player 2 Wins!";transCard(useDeck,0);
         return true;
     }
+    return false;
 }
 
-void pickCard(int p1Cards[],int p2Cards[],int action){
-    int i=0;
-    while(p1Cards[i]!=0){
-        i++;
+void pickCard(int p1Cards[],int p2Cards[],int action,bool playerTurn){
+    if(playerTurn){
+        int i=0,temp;
+        while(p1Cards[i]!=0){
+            i+=1;
+        }
+        p1Cards[i+1]=p2Cards[action-1];
+        for(int j =action-1;p2Cards[j]!=0;j++){
+            p2Cards[j]=p2Cards[j+1];
+        }
     }
-    p1Cards[i+1]=p2Cards[action-1];
-
+    else{
+        int i=0,temp;
+        while(p2Cards[i]!=0){
+            i+=1;
+        }
+        p2Cards[i+1]=p1Cards[0];
+        for(int j =0;p2Cards[j]!=0;j++){
+            p1Cards[j]=p1Cards[j+1];
+        }
+    }
 }
+
 void p2AvailCards(int p1Cards[],int p2Cards[]){
     int i=0;
     while(p2Cards[i]!=0){
-        cout<<" ["<<i+1<<"] ";
+        cout<<"["<<i+1<<"] ";
         i++;
     }
     cout<<endl;
+}
+
+void showMechanics(){
+    cout<<"\nTo play the game you are initially given 25 cards and 26 cards are given to the bot.\nFirst turn : You will be asked to pick one card on the opponent card to find a pair.\nAfter the first turn: The program will automatically remove your paired cards and move it to used deck.\nThe opponent will now repeat what you need to do.\nThe player who first empty their hands WINS!\nGood luck Player 1\n";
 }
 int main(){
     stack <int> cardDeck;
     int usedCard[52];
     int cards[52];
-    int p1Hand[25];
+    int p1Hand[26];
     int p2Hand[26];
     int monkey,action;//used for the hidden card
     bool playerTurn=true,emptyhand=false;
@@ -230,14 +250,40 @@ int main(){
     mixDeck(cardDeck,cards);
     monkey=giveCard(cardDeck,p1Hand,p2Hand);
     usedCard[0]=monkey;//pushes the monkey card at the the start of the array
-    showPlayerCard(p1Hand);
+    int intro;
+    bool wrong_input=true;
+    //Loop for introduction
+    while(wrong_input){
+        cout<<"Good day Player 1! You are about to play a game callled Unggoy-ungguyan!\n[1]Play the Game\n[2]Learn the mechanics\n[3]Exit\nInput : ";
+        cin>>intro;
+        if (intro==1){
+            wrong_input=false;
+        }
+        else if (intro==2){
+            showMechanics();
+        }
+        else if (intro==3){
+            return 0;
+        }
+    }
     while(!emptyhand){
-        cout<<"Your current cards : ";
-        showPlayerCard(p1Hand);
-        cout<<"It is your turn to pick a card from Player 2 Cards\n";
-        cin>>action;
-        pickCard(p1Hand,p2Hand,action);
-        pairCards(usedCard,p1Hand,p2Hand,playerTurn);
+        if(playerTurn){
+            cout<<"Your current cards : ";
+            showPlayerCard(p1Hand);
+            cout<<"It is your turn to pick a card from Player 2 Cards\n";
+            p2AvailCards(p1Hand,p2Hand);
+            cout<<"You have chosen : ";
+            cin>>action;
+            pickCard(p1Hand,p2Hand,action,playerTurn);
+            pairCards(usedCard,p1Hand,p2Hand,playerTurn);
+            cout<<endl;
+        }
+        else{
+            cout<<"It is Player 2's Turn!\n";
+            pickCard(p1Hand,p2Hand,action,playerTurn);
+            pairCards(usedCard,p1Hand,p2Hand,playerTurn);
+            cout<<endl;
+        }
         emptyhand=endGame(p1Hand,p2Hand,usedCard);
     }
 }
