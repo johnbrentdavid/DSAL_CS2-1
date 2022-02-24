@@ -1,19 +1,37 @@
 from xmlrpc.client import boolean
 #function for Basic Calc
+#recursion for getting the factorial
+def getFactorial(num1):
+    if num1 ==1:
+        return 1
+    else:
+        num2 = num1 -1 
+        return(num1 *getFactorial(num2))
 def Basic_Calc():
-    num1 = input("Enter your 1st number: ")
-    num2 = input("Enter your 2nd number: ")
-    op = input("What do you want to do?\n[1]ADD\n[2]SUBTRACT\n[3]TIMES\n[4]DIV\n[5]REMAINDER\nDecision : ")
+    op = input("What do you want to do?\n[1]ADD\t\t[2]SUBTRACT\n[3]TIMES\t[4]DIV\n[5]REMAINDER\t[6]FACTORIAL\nDecision : ")
     if op == '1':
+        num1 = input("Enter your 1st number: ")
+        num2 = input("Enter your 2nd number: ")
         print(int(num1)+int(num2))
     elif op =='2':
+        num1 = input("Enter your 1st number: ")
+        num2 = input("Enter your 2nd number: ")
         print(int(num1)-int(num2))
     elif op =='3':
+        num1 = input("Enter your 1st number: ")
+        num2 = input("Enter your 2nd number: ")
         print(int(num1)*int(num2))
     elif op =='4':
+        num1 = input("Enter your 1st number: ")
+        num2 = input("Enter your 2nd number: ")
         print(int(num1)/int(num2))
     elif op == '5':
+        num1 = input("Enter your 1st number: ")
+        num2 = input("Enter your 2nd number: ")
         print(int(num1)%int(num2))
+    elif op == '6':
+        num1 = int(input("Enter a base value to factorial: "))
+        print("The factorial of",num1,"is",getFactorial(num1))
     else:
         print("Invalid input")
 #function for MAD LIB
@@ -37,3 +55,4 @@ while repeat:
         repeat = False
     else:
         print("Wrong Input! Try Again")
+    print("=============================")
