@@ -1,8 +1,9 @@
 #John Brent David
 #CS 2-1
 #Function for Fibonacci 
+from pickle import APPEND
 from tracemalloc import start
-
+import random
 
 next_num =1
 prev_num =0
@@ -60,10 +61,24 @@ def towerofHanoi(num,start,aux,des,source,destination,auxiliary):
     des.append(start.pop(len(start)-1))#transfer the top most element of start array
     print ("Move disk",num,"from",source,"to",destination)
     towerofHanoi(num-1,aux,start,des,source, auxiliary, destination)   
+#Recursion calling function
+# I have created a simple game in which you will choose which has more in an array Odd or Even?
+def is_even(n):
+    if n == 0:
+        return True
+    else:
+        return not_even(n-1)
+
+def not_even(n):
+    if n == 0:
+        return False
+    else:
+        return is_even(n-1)
+
 #START
 repeat = True
 while repeat:
-    app = int(input("What application would you like to use?\n[1]Fibonacci\t\t[2]Factorial\n[3]Reverse a number\t[4]Reverse a Word\n[5]Tower of Hanoi\n[0]EXIT\nDecision : "))
+    app = int(input("What application would you like to use?\n[1]Fibonacci\t\t[2]Factorial\n[3]Reverse a number\t[4]Reverse a Word\n[5]Tower of Hanoi\t[6]Odd or Even Game\n[0]EXIT\nDecision : "))
     if app == 1:
         num1 = int(input("How many # to display on fibonacci series: "))
         Fibonacci(num1)
@@ -93,6 +108,33 @@ while repeat:
         towerofHanoi(num,start_rod,aux_rod,des_rod,"Start","Des","Aux")
         print("------------------\n   END Position\n------------------")
         printRods(start_rod,aux_rod,des_rod)#Prints After
+    elif app== 6:
+        numEven =0
+        numOdd = 0
+        arr=[]
+        #this gives the random value to the array
+        for i in range (0,49):
+            arr.append(random.randint(1,100))
+            print(arr[i], end=" ")
+            is_it_even=is_even(arr[i])
+            #if statement to know if the element at ith index is even or odd then add 1 to the correct category
+            if is_it_even:
+                numEven +=1
+            else:
+                numOdd +=1
+        choice = int(input("\nWhat do you think has more on the list?\n[1]Odd\t[2]Even\nDecision: "))
+        if choice ==1:
+            if numEven < numOdd:
+                print("Congrats!You guessed it correctly")
+            else:
+                print("Unfortunately!You guessed it wrong")
+        elif choice == 2:
+            if numOdd < numEven:
+                print("Congrats!You guessed it correctly")
+            else:
+                print("Unfortunately!You guessed it wrong")
+        else:
+            print("Wrong input!")
     elif app == 0:
         print("You are now exiting the Program!\nThanks for trying it")
         repeat = False

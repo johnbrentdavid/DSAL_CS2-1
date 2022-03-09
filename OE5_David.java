@@ -39,10 +39,8 @@ public class OE5_David{
     //arr[] = array
     //low = starting index
     //high = ending index
-    private static int Num = 0;
     static void qsort(int arr[],int low,int high){
         if(low<high){
-            Num+=1;
             //p = partition index
             //that the pivot is already in the sorted position
             int p = mypartition(arr, low, high);
@@ -63,7 +61,7 @@ public class OE5_David{
 
 //Functions for hybrid Quick sort
 // Total number of elements to be sorted
-    private static final int N = 10;
+    private static final int N = 100;
  
     // Total number of sorting runs
     private static final int NUM = 10;
