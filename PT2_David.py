@@ -39,24 +39,27 @@ def reverseWord(word):
     else:
         return reverseWord(word[1:])+word[0]
 #function for tower of hanoi
-start_rod = []
-mid_rod = []
-end_rod = []
-def initRod(num):#WE USE STACK here the method APPEND is == to push in other languages
-    global start_rod
-    if num<1:
+def printRods(start_rod,aux_rod,des_rod):
+    print("Start Rod :",end=" ")
+    for i in range (0,len(start_rod)):
+        print(start_rod[i],end=" ")
+    print("\nAux Rod : ",end=" ")
+    for i in range (0,len(aux_rod)):
+        print(aux_rod[i],end=" ")
+    print("\nDes Rod : ",end=" ")
+    for i in range (0,len(des_rod)):
+        print(des_rod[i],end=" ")
+    print("\n------------------")
+#main function of tof
+def towerofHanoi(num,start,aux,des,source,destination,auxiliary):
+    if num == 1:
+        des.append(start.pop(len(start)-1))
+        print ("Move disk 1 from",source,"to",destination)
         return
-    else:
-        print(num)
-        start_rod.append(num)
-        print(start_rod.top())
-        initRod(num-1)
-
-def towerofHanoi():
-    global start_rod
-    global mid_rod
-    global end_rod
-
+    towerofHanoi(num-1,start,des,aux,source, auxiliary, destination)
+    des.append(start.pop(len(start)-1))#transfer the top most element of start array
+    print ("Move disk",num,"from",source,"to",destination)
+    towerofHanoi(num-1,aux,start,des,source, auxiliary, destination)   
 #START
 repeat = True
 while repeat:
@@ -75,8 +78,21 @@ while repeat:
         print("The reverse of the word is :",reverseWord(word))
     elif app == 5:
         num = int(input("Enter the number of rings: "))
-        initRod(num)
-
+        value=num #value as placeholder to init start array
+        start_rod=[]
+        aux_rod=[]
+        des_rod=[]
+        for i in range (0,num):
+            if i==num:
+                break
+            else:
+                start_rod.append(value)
+                value-=1
+        print("------------------\n   START Position\n------------------")
+        printRods(start_rod,aux_rod,des_rod)#Prints Before
+        towerofHanoi(num,start_rod,aux_rod,des_rod,"Start","Des","Aux")
+        print("------------------\n   END Position\n------------------")
+        printRods(start_rod,aux_rod,des_rod)#Prints After
     elif app == 0:
         print("You are now exiting the Program!\nThanks for trying it")
         repeat = False
