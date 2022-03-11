@@ -62,11 +62,9 @@ public class OE5_David{
 //Functions for hybrid Quick sort
 // Total number of elements to be sorted
     private static final int N = 100;
- 
-    // Total number of sorting runs
+// Total number of sorting runs
     private static final int NUM = 10;
- 
-    // Function to perform insertion sort on `arr[]`
+// Function to perform insertion sort on `arr[]`
     public static void insertionSort(int[] arr, int low, int n)
     {
         // Start from the second element (the element at index 0
@@ -165,7 +163,7 @@ public class OE5_David{
             }
         }
     }
- 
+
 
     public static void main(String[] args){
     
@@ -189,6 +187,7 @@ public class OE5_David{
         System.out.println("The average time taken by the Random Pivot Quicksort : "+ time/200 +"ns");
     }
     else if(choice ==2){
+        //random number generator for 100 elements
         Random randNum = new Random();
         int[] arr = new int[N];
         for (int i = 0; i < N; i++) {
