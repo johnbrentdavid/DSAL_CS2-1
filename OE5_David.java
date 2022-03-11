@@ -224,13 +224,13 @@ public class OE5_David{
             if (i == NUM-1){
                 System.out.println("Sorted Array Values by the non-optimized Quicksort : ");
                 printArray(arr);
-                System.out.println("Sorted Array Values by the optimized Quicksort : ");
+                System.out.println("Sorted Array Values by the Hybrid Quicksort : ");
                 printArray(dup);
             }
         }
         System.out.println("The average time taken by the non-optimized Quicksort: " +
                 t1/NUM + "ns");
-        System.out.println("The average time taken by the optimized Quicksort: " +
+        System.out.println("The average time taken by the Hybrid Quicksort: " +
                 t2/NUM + "ns");
     }
     else{
