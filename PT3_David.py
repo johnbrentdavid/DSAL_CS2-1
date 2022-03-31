@@ -148,3 +148,5 @@ if __name__ == '__main__':
             print("Post-O : ",numbers_tree.post_order_traversal(),"\n========================")
         elif app == 0:
             break
+        else: 
+            print("Wrong user input try again")
