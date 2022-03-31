@@ -139,8 +139,9 @@ if __name__ == '__main__':
         elif app == 3:
             print("------------------------")
             num = int(input("Delete : "))
+            print("========================\nBefore Deletion IO :",numbers_tree.in_order_traversal(),"\n------------------------")
             numbers_tree.delete(num)
-            print("========================\nIO : ",numbers_tree.in_order_traversal(),"\n========================")
+            print("After Deletion IO :",numbers_tree.in_order_traversal(),"\n========================")
         elif app == 4:
             print("========================\nIO : ",numbers_tree.in_order_traversal())
             print("Pre-O : ",numbers_tree.pre_order_traversal())
