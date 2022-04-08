@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.Hashtable;
 
-public class OE7_David {
+public class OE8_David {
     public static void main(String[] args) {
         Scanner in= new Scanner(System.in);
         Hashtable<String, String> ht = new Hashtable<>();
