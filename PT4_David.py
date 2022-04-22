@@ -4,11 +4,29 @@ import os
 import math
 import random
 
+#Choose the level difficulty IMPLEMENTATION OF NESTED HASH TABLE
+difficulty = {'easy':{'speed':.2,'enemies':5},'medium':{'speed':2,'enemies':6},'hard':{'speed':4,'enemies':5}}
+level = input("What level would you like to play?\nEasy\nMedium\nHard\nDecision : ")
+
+if level.lower() == "easy":
+    enemyspeed = difficulty['easy']['speed']
+    number_of_enemies = difficulty['easy']['enemies']
+elif level.lower() == "medium":
+    enemyspeed = difficulty['medium']['speed']
+    number_of_enemies = difficulty['medium']['enemies']
+elif level.lower() == "hard":
+    enemyspeed = difficulty['hard']['speed']
+    number_of_enemies = difficulty['hard']['enemies']
+
 #setup screen
 wn = turtle.Screen()
 wn.bgcolor("black")
 wn.title("Space Invaders")
+wn.bgpic("bg.gif")
 
+#Register the shapes
+turtle.register_shape("kirby.gif")
+turtle.register_shape("enemy.gif")
 #Create the border
 border_pen = turtle.Turtle()
 border_pen.speed(0)
@@ -37,16 +55,12 @@ score_pen.hideturtle()
 #Create the player turtle
 player = turtle.Turtle()
 player.color("blue")
-player.shape("triangle")
+player.shape("kirby.gif")
 player.penup()
 player.speed(0)
 player.setposition(0,-250)
 player.setheading(90)
 
-
-
-#Choose a number of enemies = 5
-number_of_enemies = 5
 #Create an empty list of enemies
 enemies = []
 
@@ -57,14 +71,14 @@ enemy = turtle.Turtle()
 for enemy in enemies:
     #Create the invader
     enemy.color("red")
-    enemy.shape("circle")
+    enemy.shape("enemy.gif")
     enemy.penup()
     enemy.speed(0)
     x = random.randint(-200,200)
     y = random.randint(100,250)
     enemy.setposition(x,y)
 
-enemyspeed = 2
+
 
 #Create Player's bullet
 bullet = turtle.Turtle()
@@ -77,7 +91,7 @@ bullet.setheading(90)
 bullet.shapesize(.5,.5)
 
 
-bulletspeed = 30
+bulletspeed = 40
 
 #DEF bullet state
 #ready - ready to fire
@@ -124,6 +138,7 @@ turtle.onkeypress(fire_bullet,"space")
 
 #MAIN GAME LOOP
 while True:
+    wn.update()
     for enemy in enemies:
         #Move the enemy
         x = enemy.xcor()
@@ -163,9 +178,10 @@ while True:
             score_pen.write(scorestring,False,align="left",font = ("Arial",14,"normal"))
 
         if isCollision(player,enemy):
+            player.setposition(1500,1500)
             player.hideturtle()
             enemy.hideturtle()
-            print ("Game Over")
+            print ("Game Over\nFinal Score : ", score)
             break
 
     #Move the bullet
@@ -177,5 +193,3 @@ while True:
     if bullet.ycor()>275:
         bullet.hideturtle()
         bulletstate = "ready"
-
-    
